@@ -23,75 +23,88 @@ int main()
     {
         ll n, m;
         cin >> n >> m;
-        vector<pair<ll, ll>> temp(n);
-        for (ll i = 0; i < temp.size(); i++)
+        vector<ll> val(n);
+        vector<ll> pos(n);
+        for (long long i = 0; i < n; i++)
         {
-            cin >> temp[i].first;
-            temp[i].second = i;
+            cin >> val[i];
+            val[i]--;
+            pos[val[i]] = i;
         }
-        sort(temp.begin(), temp.end());
         ll cnt = 1;
-        for (ll i = 1; i < temp.size(); i++)
+       // cout<<pos[0]<<" ";
+        for (long long i = 1; i < n; i++)
         {
-            if (temp[i].second < temp[i - 1].second)
+         //   cout<<pos[i]<<" ";
+            if (pos[i] < pos[i - 1])
             {
                 cnt++;
             }
         }
-        map<ll, ll> ma;
-        for (ll i = 0; i < temp.size(); i++)
-        {
-            ma[temp[i].second] = i;
-        }
-        while (m--)
+        //cout<<endl;
+        for (long long i = 0; i < m; i++)
         {
             ll a, b;
-            cin >> a >> b; //*
+            cin >> a >> b;
             a--;
             b--;
-            ll la = ma[a], lb = ma[b]; // m
-            ma[a] = lb;
-            ma[b] = la;
-            if (la > 0 && temp[la].second < temp[la - 1].second)
+            
+            if (val[a] > 0 && pos[val[a]] < pos[val[a] - 1])
             {
                 cnt--;
             }
-            if (lb > 0 && temp[lb].second < temp[lb - 1].second)
+            if (val[b] > 0 && pos[val[b]] < pos[val[b] - 1])
             {
                 cnt--;
             }
-            if (abs(la - lb) != 1)
+            if (val[a] < n - 1 && pos[val[a]] > pos[val[a] + 1])
             {
-                if (la + 1 < n && temp[la].second > temp[la + 1].second)
-                {
-                    cnt--;
-                }
-                if (lb + 1 < n && temp[lb].second > temp[lb + 1].second)
-                {
-                    cnt--;
-                }
+                cnt--;
             }
-            swap(temp[la], temp[lb]);
-            if (abs(la - lb) != 1)
+            if (val[b] < n - 1 && pos[val[b]] > pos[val[b] + 1])
             {
-                if (la + 1 < n && temp[la].second > temp[la + 1].second)
+                cnt--;
+            }
+            if(abs(val[a]-val[b])==1)
+            {
+                if(val[a]>val[b]&&pos[val[a]]<pos[val[b]])
                 {
                     cnt++;
                 }
-                if (lb + 1 < n && temp[lb].second > temp[lb + 1].second)
+                else if(val[b]>val[a]&&pos[val[b]]<pos[val[a]])
                 {
                     cnt++;
                 }
             }
-            if (la > 0 && temp[la].second < temp[la - 1].second)
+            swap(pos[val[a]], pos[val[b]]);
+            swap(val[a], val[b]);
+            if (val[a] > 0 && pos[val[a]] < pos[val[a] - 1])
             {
                 cnt++;
             }
-            if (lb > 0 && temp[lb].second < temp[lb - 1].second)
+            if (val[b] > 0 && pos[val[b]] < pos[val[b] - 1])
             {
                 cnt++;
             }
-
+            if (val[a] < n - 1 && pos[val[a]] > pos[val[a] + 1])
+            {
+                cnt++;
+            }
+            if (val[b] < n - 1 && pos[val[b]] > pos[val[b] + 1])
+            {
+                cnt++;
+            }
+            if(abs(val[a]-val[b])==1)
+            {
+                if(val[a]>val[b]&&pos[val[a]]<pos[val[b]])
+                {
+                    cnt--;
+                }
+                else if(val[b]>val[a]&&pos[val[b]]<pos[val[a]])
+                {
+                    cnt--;
+                }
+            }
             cout << cnt << endl;
         }
     }

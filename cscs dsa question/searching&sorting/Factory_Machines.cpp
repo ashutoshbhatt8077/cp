@@ -13,6 +13,16 @@ using namespace std;
 #define ub(hei, num) upper_bound(hei.begin(), hei.end(), num) - hei.begin()
 #define lb(hei, num) lower_bound(hei.begin(), hei.end(), num) - hei.begin()
 
+bool sol(ll mi, vll &temp,ll t)
+{
+    ll cnt = 0;
+    for (auto it : temp)
+    {
+        cnt += mi / it;
+        if(cnt>=t)return cnt;
+    }
+    return cnt>=t;
+}
 int main()
 {
     ios::sync_with_stdio(false);
@@ -26,8 +36,23 @@ int main()
         vll temp(n);
         for (auto &it : temp)
             cin >> it;
-        sort(temp.begin(),temp.end());
-        
+        ll right = temp[0] * t;
+        ll left = 1;
+        ll ans = right;
+        while (left <= right)
+        {
+            ll mid = left + (right - left) / 2;
+            if (sol(mid, temp,t))
+            {
+                ans = min(ans, mid);
+                right = mid - 1;
+            }
+            else
+            {
+                left = mid + 1;
+            }
+        }
+        cout << ans << endl;
     }
 
     return 0;

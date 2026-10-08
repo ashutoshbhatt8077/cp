@@ -1,6 +1,6 @@
 #include <bits/stdc++.h>
 using namespace std;
-
+ 
 #define f(i, s, e) for (long long i = s; i < e; i++)
 #define ll long long
 #define pii pair<int, int>
@@ -12,7 +12,7 @@ using namespace std;
 #define sc set<char>
 #define ub(hei, num) upper_bound(hei.begin(), hei.end(), num) - hei.begin()
 #define lb(hei, num) lower_bound(hei.begin(), hei.end(), num) - hei.begin()
-
+ 
 int main()
 {
     ios::sync_with_stdio(false);
@@ -21,31 +21,26 @@ int main()
     // cin>>t;
     while (t--)
     {
-        ll n;
-        cin >> n;
-        vector<pair<ll, ll>> temp(n);
+        ll n, x;
+        cin >> n >> x;
+        vll temp(n);
         for (auto &it : temp)
-            cin >> it.second >> it.first;
-
-        if (n == 0)
+            cin >> it;
+        map<ll, ll> ma;
+        ma[0] = 1;
+        ll ans = 0;
+        ll sum = 0;
+        for (int i = 0; i < n; i++)
         {
-            cout << 0 << '\n';
-            continue;
-        }
-
-        sort(temp.begin(),temp.end());
-        ll end = temp[0].first;
-        ll cnt = 1;
-        for (ll i = 1; i < n; i++)
-        {
-            if (temp[i].second >= end)
+            sum += temp[i];
+            if (ma.find(sum - x) != ma.end())
             {
-                end = temp[i].first;
-                cnt++;
+                ans += ma[sum - x];
             }
+            ma[sum]++;
         }
-        cout << cnt << '\n';
+        cout << ans << endl;
     }
-
+ 
     return 0;
 }

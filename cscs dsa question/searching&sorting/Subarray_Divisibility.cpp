@@ -23,28 +23,23 @@ int main()
     {
         ll n;
         cin >> n;
-        vector<pair<ll, ll>> temp(n);
+        vll temp(n);
+        vll ma(n, 0);
+        ma[0] = 1;
         for (auto &it : temp)
-            cin >> it.second >> it.first;
-
-        if (n == 0)
+            cin >> it;
+        ll ans = 0;
+        ll sum = 0;
+        for (int i = 0; i < n; i++)
         {
-            cout << 0 << '\n';
-            continue;
-        }
-
-        sort(temp.begin(),temp.end());
-        ll end = temp[0].first;
-        ll cnt = 1;
-        for (ll i = 1; i < n; i++)
-        {
-            if (temp[i].second >= end)
+            sum += temp[i];
+            if (ma[(sum % n + n) % n] != 0)
             {
-                end = temp[i].first;
-                cnt++;
+                ans += ma[(sum % n + n) % n];
             }
+            ma[(sum % n + n) % n]++;
         }
-        cout << cnt << '\n';
+        cout << ans << endl;
     }
 
     return 0;

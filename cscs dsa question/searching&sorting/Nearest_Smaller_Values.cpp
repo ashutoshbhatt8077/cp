@@ -23,29 +23,27 @@ int main()
     {
         ll n;
         cin >> n;
-        vector<pair<ll, ll>> temp(n);
+        vll temp(n);
         for (auto &it : temp)
-            cin >> it.second >> it.first;
-
-        if (n == 0)
+            cin >> it;
+        stack<pair<int,int>> st;
+        for (int i = 0; i < n; i++)
         {
-            cout << 0 << '\n';
-            continue;
-        }
-
-        sort(temp.begin(),temp.end());
-        ll end = temp[0].first;
-        ll cnt = 1;
-        for (ll i = 1; i < n; i++)
-        {
-            if (temp[i].second >= end)
+            while(!st.empty()&&st.top().first>=temp[i])
             {
-                end = temp[i].first;
-                cnt++;
+                st.pop();
             }
+            if(st.empty())
+            {
+                cout<<"0 ";
+            }
+            else
+            {
+                cout<<st.top().second<<" ";
+            }
+            st.push({temp[i],i+1});
         }
-        cout << cnt << '\n';
     }
 
-    return 0;
+    return 0; 
 }

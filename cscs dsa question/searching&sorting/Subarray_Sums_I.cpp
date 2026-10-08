@@ -21,30 +21,32 @@ int main()
     // cin>>t;
     while (t--)
     {
-        ll n;
-        cin >> n;
-        vector<pair<ll, ll>> temp(n);
+        ll n, x;
+        cin >> n >> x;
+        vll temp(n);
         for (auto &it : temp)
-            cin >> it.second >> it.first;
-
-        if (n == 0)
+            cin >> it;
+        map<ll, ll> ma;
+        ma[0] = 1;
+        ll ans = 0;
+        ll sum = 0;
+        ll j = 0;
+        for (int i = 0; i < n; i++)
         {
-            cout << 0 << '\n';
-            continue;
-        }
-
-        sort(temp.begin(),temp.end());
-        ll end = temp[0].first;
-        ll cnt = 1;
-        for (ll i = 1; i < n; i++)
-        {
-            if (temp[i].second >= end)
+            sum += temp[i];
+            // cout<<temp[i]<<" "<<sum<<" , ";
+            while (j < n && sum > x)
             {
-                end = temp[i].first;
-                cnt++;
+                sum -= temp[j];
+                j++;
             }
+            if (sum == x)
+            {
+                ans++;
+            }
+            // cout<<sum<<endl;
         }
-        cout << cnt << '\n';
+        cout << ans << endl;
     }
 
     return 0;
